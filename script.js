@@ -23,10 +23,26 @@ let tasks = [{
 	const form = document.querySelector('.task-form');
 	const taskTitle = form.querySelector('.task-title');
 	const taskBody = form.querySelector('.task-body');
-	const tasksContainer = document.querySelector('.cards-list .row');
+	const tasksContainer = document.querySelector('.cards-list .col');
 	const addTaskBtn = document.querySelector('.add-task-btn');
 
 	addTaskBtn.addEventListener('click', onSubmitHandler);
+	tasksContainer.addEventListener('click', removeTask);
+
+	function removeTask(e) {
+		if (e.target.classList.contains('delete-task-btn')) {
+			const isConfirmed = confirm('Вы точно хотите удалить эту задачу?');
+
+			if (!isConfirmed) {
+				return;
+			}
+			e.target.closest('.card').remove();
+		}
+
+
+
+
+	}
 
 	function onSubmitHandler(e) {
 		e.preventDefault();
@@ -68,19 +84,19 @@ let tasks = [{
 
 	function createNewHtmlElement(task) {
 		const taskWrapper = document.createElement('div');
-		taskWrapper.classList.add('card', 'text-white', 'bg-primary', 'mb-3', 'w-100');
+		taskWrapper.classList.add('card', 'border-warning', 'mb-3', 'w-100');
 
 		const taskTitle = document.createElement('div');
-		taskTitle.classList.add('card-header', 'bg-primary');
+		taskTitle.classList.add('card-header', 'bg-warning');
 		taskTitle.textContent = task.title;
 
 		const taskBody = document.createElement('div');
-		taskBody.classList.add('card-body', 'bg-warning', 'text-dark');
+		taskBody.classList.add('card-body');
 		taskBody.textContent = task.body;
 
 		const deleteBtn = document.createElement('button');
 		deleteBtn.textContent = 'Удалить задачу';
-		deleteBtn.classList.add('btn', 'btn-danger', 'ml-auto', 'd-block', 'mt-4');
+		deleteBtn.classList.add('btn', 'btn-info', 'w-auto', 'd-block', 'mt-3', 'ml-auto', 'delete-task-btn');
 
 		taskWrapper.appendChild(taskTitle);
 		taskBody.appendChild(deleteBtn);
